@@ -17,6 +17,12 @@ and compliance reporting.
 - Defect counts inside/outside LSL/USL
 - Optional histogram export to PNG (for report attachments)
 
+<img width="692" height="649" alt="cap_login" src="https://github.com/user-attachments/assets/ed2b4484-3b6c-496e-a6e4-8d830a8de667" />
+
+<img width="1358" height="786" alt="cap_graph" src="https://github.com/user-attachments/assets/f2a32393-6902-45fb-be78-36780ebe8711" />
+
+<img width="323" height="318" alt="cap_details" src="https://github.com/user-attachments/assets/c397b1b7-bd18-4ef7-b78e-296761177842" />
+
 ## Example
 **Input CSV** (`data/sample.csv`)
 ```csv
@@ -29,8 +35,4 @@ S #,Size,Component,UOM,Spec,Tolerance,Finding
 ,,(Not including Rib Trim),,,,
 1,XS,Sleeve length – from shoulder seam,Inch,7 '1/4,1/4,7
 
-<img width="692" height="649" alt="cap_login" src="https://github.com/user-attachments/assets/ed2b4484-3b6c-496e-a6e4-8d830a8de667" />
 
-<img width="1358" height="786" alt="cap_graph" src="https://github.com/user-attachments/assets/f2a32393-6902-45fb-be78-36780ebe8711" />
-
-<img width="323" height="318" alt="cap_details" src="https://github.com/user-attachments/assets/c397b1b7-bd18-4ef7-b78e-296761177842" />
