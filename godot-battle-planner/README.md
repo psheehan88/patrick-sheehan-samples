@@ -1,4 +1,4 @@
-# Evony Battle Planner (Godot 4.4)
+# Dynamic Battle Planner (Godot 4.4)
 
 Touch-friendly isometric battle planner used to prototype hive layouts, assign keeps, and plan
 reinforcements. Supports small (2x2) and large (3x3) keeps, grid snapping, overlap detection,
