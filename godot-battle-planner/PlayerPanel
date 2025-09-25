@@ -1,0 +1,65 @@
+extends PanelContainer
+
+signal create_player(player: Dictionary)
+
+@onready var _name  : LineEdit          = $VBoxRoot/VBox/NameRow/Name
+@onready var _size  : OptionButton      = $VBoxRoot/VBox/SizeRow/Size
+@onready var _color : ColorPickerButton = $VBoxRoot/VBox/ColorRow/Color
+@onready var _toggle: CheckButton       = $VBoxRoot/Header/Collapse
+@onready var _create_btn: Button        = $VBoxRoot/VBox/Create
+
+func _ready() -> void:
+	print("[PlayerPanel] _ready start")
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	_toggle.button_pressed = Settings.player_panel_collapsed
+	_update_collapsed()
+	_toggle.toggled.connect(_on_collapse_toggled)
+	_create_btn.pressed.connect(_on_create_pressed)
+
+	# --- SIZE DROPDOWN: populate + make it visible ---
+	_size.clear()
+	_size.add_item("2x2", 2)
+	_size.add_item("3x3", 3)
+	_size.add_item("4x4", 4)
+	_size.selected = 0
+	_size.custom_minimum_size = Vector2(140, 28)  # give it room
+	print("[PlayerPanel] size items:", _size.item_count, " selected:", _size.selected, " text:", _size.get_item_text(_size.selected))
+
+	# --- COLOR PICKER: scale the popup after press (deferred) ---
+	_color.custom_minimum_size = Vector2(140, 32)
+	_color.pressed.connect(func ():
+		# Let the popup exist, then resize it
+		await get_tree().process_frame
+		var popup := _color.get_popup() # in 4.4 this is a Window
+		if popup:
+			popup.size = Vector2i(420, 420)
+			print("[PlayerPanel] color popup resized to", popup.size)
+	)
+
+	print("[PlayerPanel] _ready done")
+
+func _on_collapse_toggled(v: bool) -> void:
+	Settings.player_panel_collapsed = v
+	Settings.save_settings()
+	_update_collapsed()
+
+func _update_collapsed() -> void:
+	$VBoxRoot/VBox.visible = !Settings.player_panel_collapsed
+
+func _on_create_pressed() -> void:
+	var size_val: int = _size.get_selected_id()
+	var player := {
+		"name": String(_name.text).strip_edges(),
+		"size": size_val,
+		"color": _color.color,
+		"icon": null
+	}
+	print("[PlayerPanel] Create pressed. name=%s size=%s color=%s" % [player.name, str(player.size), str(player.color)])
+	if player.name.is_empty():
+		EventBus.emit_signal("toast", "Enter a name first")
+		print("[PlayerPanel] create aborted: empty name")
+		return
+
+	# Normal flow
+	emit_signal("create_player", player)
+	EventBus.emit_signal("player_created", player)
