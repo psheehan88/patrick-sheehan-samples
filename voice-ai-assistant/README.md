@@ -24,6 +24,34 @@ on the host machine.
    - Sends to AI → "The forecast today is sunny, high of 75."
    - Speaks response aloud with voice synthesis
 
+Voice AI Assistant – Technology Overview
+----------------------------------------
+
+Core Language:
+- Python 3.x
+
+Speech Input:
+- SpeechRecognition (microphone capture)
+- PyAudio / system microphone drivers
+
+Natural Language Processing:
+- OpenAI API (chat/completions endpoint)
+- JSON-based configuration for custom commands
+
+Speech Output:
+- eSpeak (lightweight TTS engine)
+- Can be swapped for alternatives (Piper, pyttsx3, gTTS)
+
+Configuration:
+- config.json file defines:
+  - Trigger phrases
+  - Responses
+  - Optional shell commands for automation
+
+System Integration:
+- OS-level actions via subprocess (open apps, run commands)
+- Loop control (exit/stop/quit)
+  
 ## Example Code Snippets
 
 ### `assistant.py` – Main Loop
@@ -83,26 +111,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-Tech
 
-Python
-
-SpeechRecognition (microphone input)
-
-OpenAI API (natural language responses)
-
-Espeak / TTS (voice output)
-
-JSON config (command mapping)
-
-Why this matters
-
-This project demonstrates:
-
-Practical AI assistant design
-
-Voice pipeline (speech → AI → speech)
-
-Extensibility via config
-
-Cross-domain knowledge: NLP, APIs, OS automation
